@@ -1,25 +1,72 @@
+
 # Repository Guidelines
 
-## Project Structure & Module Organization
+## Project Overview
 
-This repository is currently an empty scaffold: no source, tests, or assets are present. Keep application code in a clearly named source directory (for example, `src/`), tests in `tests/` or alongside their modules, and static files in `assets/`. Update this guide when the project’s actual layout and framework are established.
+This repository contains an Automated Multi-Platform Posting System built using Python and FastAPI.
 
-## Build, Test, and Development Commands
+The application accepts a message through a REST API and independently publishes it to configured third-party platforms.
 
-No build system or development commands are configured yet. Once a package manager or build tool is added, document its standard setup, local run, test, and build commands here. Run commands from the repository root, and keep generated output out of source directories where practical.
+## Project Structure
 
-## Coding Style & Naming Conventions
+- `app/main.py` – FastAPI application and API endpoint.
+- `app/schemas.py` – Request and response validation.
+- `app/config.py` – Application configuration and environment variables.
+- `app/platforms/` – Individual platform integrations.
+- `app/services/posting_service.py` – Posting orchestration.
+- `tests/` – Automated tests for API functionality and platform integrations.
+- `.env.example` – Example environment configuration.
+- `requirements.txt` – Python dependencies.
 
-There are no language-specific conventions or formatter configuration in the scaffold. Follow the formatter and linter selected by the project, use consistent indentation, and prefer descriptive names that match the language’s usual casing (for example, `PascalCase` for many type names and `camelCase` for many functions). Avoid adding a second formatter or linter without a project need.
+## Development Commands
+
+Install dependencies:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Run the application:
+
+```bash
+python -m uvicorn app.main:app --host 0.0.0.0 --port 4000
+```
+
+Open API documentation:
+
+`http://localhost:4000/docs`
+
+Run tests:
+
+```bash
+python -m pytest -q
+```
+
+## Coding Guidelines
+
+- Use Python conventions and PEP 8.
+- Keep each platform integration independent.
+- Use HTTPX for HTTP API requests.
+- Use Pydantic for request and response validation.
+- Keep configuration separate from application logic.
+- Handle API errors without interrupting other platform integrations.
 
 ## Testing Guidelines
 
-No test framework or coverage requirement is configured. Add tests with the framework chosen for the codebase; use names that describe behavior (for example, `posting-schedule.test.ts`). Include the command to run the relevant tests whenever test tooling is introduced.
+- Add tests for new functionality.
+- Test validation and error-handling scenarios.
+- Test individual platform adapters independently.
+- Run the complete test suite before committing changes.
 
-## Commit & Pull Request Guidelines
+## Security
 
-Git history is not available in this scaffold, so no existing commit convention can be confirmed. Use concise, imperative commit subjects (such as `Add posting queue`) and keep each change focused. Pull requests should explain the change and its rationale, list validation performed, link related issues when available, and include screenshots for user-facing changes.
+- Store credentials in environment variables.
+- Never commit `.env` files or API credentials.
+- Keep `.env.example` limited to placeholder values.
+- Never expose tokens, passwords, or webhook URLs in logs or screenshots.
 
-## Security & Configuration
+## Git Guidelines
 
-Keep credentials and private configuration out of version control. Provide safe example configuration with placeholders, and document required environment variables without including real secrets.
+- Use descriptive commit messages.
+- Keep commits focused on individual changes.
+- Verify tests before pushing changes to GitHub.
